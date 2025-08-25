@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gerenciador de tarefas</title>
+</head>
+
+<body>
+    <h1>Minhas tarefas</h1>
+    <form id="form-tarefa">
+        <input type="texto" id="inputTarefa" placeholder="Digite o nome da tarefa">
+        <button type="submit">
+            Adicionar
+        </button>
+        <h2>Lista de tarefa</h2>
+        <ul id="listaTarefa">
+        </ul>
+        <script>
+            let lista =["Estudar JS","Estudar BD","Estudar Java"]
+            const form = document.getElementById('form-tarefa')
+            const input = document.getElementById('inputTarefa')
+            const ul = document.getElementById('listaTarefa')
+
+            //Função para renderizar lista
+            function atualizarLista(){
+                ul.innerHTML = "";
+
+                lista.forEach((tarefa,index)=>{
+                    let li = document.createElement("li");
+                    li.textContent = tarefa;
+
+                    //Botao editar
+                    let bntEditar = document.createElement('button');
+                    bntEditar.textContent = 'Editar';
+
+                    bntEditar.onclick = ()=>{
+                        let novoNome = prompt("Digite o novo nome da tarefa");
+
+                        if(novoNome){
+                            lista[index] = novoNome;
+                            atualizarLista();
+                        }
+                    }
+                    ul.appendChild(bntEditar);
+                    ul.appendChild(li);
+
+                });
+            }//Fim da funcao atualizar lista
+            //Evento para adicionar uma tarefa
+            form.addEventListener("submit", function(event){
+
+                 //preventDefault evita que o botão
+                event.preventDefault();
+
+                lista.push(input.value)
+                input.value ="";
+                atualizarLista();
+
+            });
+            atualizarLista();
+            
+        </script>
+    </form>
+</body>
+
+</html>
